@@ -1,0 +1,11 @@
+* {
+    background-color: linen;
+}
+
+.reg {
+    text-align: center;
+    border: darkkhaki solid 2px;
+}
+input {
+    margin: 10px;
+}
