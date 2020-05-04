@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "./axios";
 
+import { HashRouter, Link } from "react-router-dom";
+
 export default class Registration extends React.Component {
     constructor() {
         super();
@@ -37,7 +39,7 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div className="reg">
-                <h3>I am the Registration Component!</h3>
+                <h2 id="heading">Please register here</h2>
                 {this.state.error && <div>Oops something went wrong!</div>}
                 <input
                     name="first"
@@ -73,6 +75,12 @@ export default class Registration extends React.Component {
                 />
                 <br></br>
                 <button onClick={() => this.submit()}>Register!</button>
+                <HashRouter>
+                    <div id="login">
+                        You already have an account?{" "}
+                        <Link to="/login">You can log in here!</Link>
+                    </div>
+                </HashRouter>
             </div>
         );
     }

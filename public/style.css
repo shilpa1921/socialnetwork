@@ -8,8 +8,53 @@ main {
 
 .reg {
     text-align: center;
+    background-color: lightcoral;
     border: darkkhaki solid 2px;
+    max-width: 50%;
+    margin-left: 25%;
+    padding: 25px;
 }
+
+#passwordreset {
+    text-align: center;
+
+    border: darkkhaki solid 2px;
+    max-width: 50%;
+    margin-left: 25%;
+    padding: 25px;
+}
+
+.login {
+    text-align: center;
+    background-color: lightcoral;
+    border: darkkhaki solid 2px;
+    max-width: 50%;
+    margin-left: 25%;
+    padding: 25px;
+}
+#heading {
+    background-color: lightcoral;
+}
+
+#reset {
+    background-color: lightcoral;
+}
+
+#head {
+    background-color: lightcoral;
+    margin-bottom: auto;
+}
+
+#register {
+    background-color: lightcoral;
+    margin-top: 25px;
+}
+
 input {
     margin: 10px;
+}
+
+#welcome h1 {
+    text-align: center;
+    color: darkred;
 }
