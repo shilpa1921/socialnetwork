@@ -2,6 +2,10 @@
     background-color: linen;
 }
 
+main {
+    min-height: 100vh;
+}
+
 .reg {
     text-align: center;
     border: darkkhaki solid 2px;

@@ -12,3 +12,15 @@ module.exports.addData = (first_name, last_name, emailadd, password) => {
         [first_name, last_name, emailadd, password]
     );
 };
+
+module.exports.getpass = (email) => {
+    return db
+        .query(`SELECT * FROM users WHERE email = $1;`, [email])
+        .then((results) => {
+            console.log("result from getpass in db.js", results);
+            return results;
+        })
+        .catch((err) => {
+            console.log("errrrrrrr", err);
+        });
+};

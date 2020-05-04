@@ -6,6 +6,8 @@ const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc");
 const db = require("./db");
 
+const csurf = require("csurf");
+
 app.use(
     cookieSession({
         secret: `I'm always angry.`,
@@ -27,6 +29,13 @@ if (process.env.NODE_ENV != "production") {
 } else {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
@@ -73,6 +82,40 @@ app.post("/register", (req, res) => {
                     console.log("Error in post registration ", err);
                     res.json({ success: false });
                 });
+        });
+});
+app.post("/login", (req, res) => {
+    console.log("req.body", req.body);
+
+    let email = req.body.email;
+    let password = req.body.password;
+    console.log("shilpa", password);
+    console.log("shilpa2", email);
+    let dbpass;
+
+    db.getpass(email)
+        .then((result) => {
+            console.log("password", result);
+            dbpass = result.rows[0].password;
+            id = result.rows[0].id;
+            req.session.userId = result.rows[0].id;
+            return dbpass;
+            console.log("dbpassword", dbpass);
+        })
+        .then((dbpass) => {
+            return compare(password, dbpass);
+        })
+        .then((match) => {
+            console.log("match", match);
+            if (match) {
+                res.json({ success: true });
+            } else {
+                res.json({ success: false });
+            }
+        })
+        .catch((err) => {
+            console.log("error in login", err);
+            res.json({ success: false });
         });
 });
 
