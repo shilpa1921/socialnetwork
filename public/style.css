@@ -82,6 +82,9 @@ input {
     align-items: center; */
     margin: 30px;
     padding: 0;
+    width: 50%;
+    left: 250px;
+    position: relative;
 }
 #file {
     display: flex;
