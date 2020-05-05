@@ -17,8 +17,7 @@ export default function Presentational({ first, last, imageUrl, toggleModal }) {
                 alt={name}
             />
             <h2>
-                Im a presentational component and my name is {first} and my last
-                name is {last}.
+                my name is {first} {last}.
             </h2>
         </div>
     );

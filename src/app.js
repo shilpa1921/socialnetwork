@@ -8,17 +8,20 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            first: "Andrea",
-            last: "Arias",
             uploaderIsVisible: false,
         };
     }
 
     componentDidMount() {
-        // console.log('App mounted');
-        // here is where we want to make an axios request to 'get' info about logged in user (first name, last name, and profilePicUrl / imageUrl)
-        // an axios route `/user` is a good path for it
-        // when we finally have the info from the server, you will want to add it to the state of the component (i.e. with setState)
+        console.log("mounted in app.js");
+        axios.post("/user").then((res) => {
+            console.log(" Response from /user: ", res.data);
+            this.setState({
+                first: res.data.first_name,
+                last: res.data.last_name,
+                imageUrl: res.data.pic_url,
+            });
+        });
     }
 
     toggleModal() {
@@ -28,6 +31,12 @@ export default class App extends React.Component {
         });
     }
 
+    receivePicture(arg) {
+        console.log("I'm running in App: ", arg);
+        this.setState({
+            imageUrl: arg,
+        });
+    }
     methodInApp(arg) {
         console.log("Im running in App!!!!! and my argument is: ", arg);
     }
@@ -44,15 +53,16 @@ export default class App extends React.Component {
                     toggleModal={() => this.toggleModal()}
                 />
 
-                <h1>Hello from App</h1>
-                <h2 onClick={() => this.toggleModal()}>
+                {/* <h1>Hello from App</h1> */}
+                {/* <h2 onClick={() => this.toggleModal()}>
                     Click here!! Changing uploaderIsVisible state with a
                     method!!
-                </h2>
+                </h2> */}
 
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         methodInApp={this.methodInApp}
+                        receivePicture={(arg) => this.receivePicture(arg)}
                         toggleModal={() => this.toggleModal()}
                     />
                 )}

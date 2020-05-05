@@ -15,10 +15,13 @@ export default class Uploader extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({
-            file: e.target.files[0],
-        });
-        console.log("this file", this.file);
+        console.log("e.target.files[0]", e.target.files[0]);
+        this.setState(
+            {
+                file: e.target.files[0],
+            },
+            () => console.log("this file", this.state)
+        );
     }
 
     uploadPic(e) {
@@ -29,6 +32,8 @@ export default class Uploader extends React.Component {
             .post("/upload-img", formData)
             .then((res) => {
                 console.log("Response: ", res);
+                this.props.receivePicture(res.data.imageUrl);
+                this.props.toggleModal();
             })
             .catch((err) => {
                 console.log("Error in post upload-img: ", err);
@@ -46,9 +51,9 @@ export default class Uploader extends React.Component {
                 <p onClick={() => this.closeModal()}>X</p>
 
                 <input
+                    type="file"
                     onChange={(e) => this.handleChange(e)}
                     name="file"
-                    type="file"
                     accept="image/*"
                 />
                 <button onClick={(e) => this.uploadPic(e)}>Upload</button>

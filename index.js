@@ -32,30 +32,6 @@ const uploader = multer({
     },
 });
 
-app.post("/upload-img", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("file", req.file.filename);
-
-    if (req.file) {
-        let filename = req.file.filename;
-        let url = config.s3Url + filename;
-        console.log("json", config.s3Url + filename);
-        let user_id = 1;
-        db.saveProfilePic(user_id, url)
-            .then((results) => {
-                console.log("upload profile pic results:", results.rows[0]);
-                let picUrl = results.rows[0].pic_url;
-                res.json({ picUrl: picUrl });
-            })
-            .catch((err) => {
-                console.log("error in upload pic", err);
-            });
-    } else {
-        res.json({
-            success: false,
-        });
-    }
-});
-
 app.use(
     cookieSession({
         secret: `I'm always angry.`,
@@ -205,6 +181,47 @@ app.post("/resetpassword/step1", (req, res) => {
         .catch((err) => {
             console.log("error in get pass", err);
             res.json({ success: false });
+        });
+});
+app.post("/upload-img", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("file", req.file.filename);
+    console.log("id in upload-img", req.session.userId);
+
+    if (req.file) {
+        let filename = req.file.filename;
+        let url = config.s3Url + filename;
+        let id = req.session.userId;
+        console.log("json", config.s3Url + filename);
+        db.saveProfilePic(id, url)
+            .then((result) => {
+                console.log("url added successfully", result);
+                let image = {
+                    imageUrl: result.rows[0].pic_url,
+                };
+                console.log("Image object: ", image);
+                res.json(image);
+            })
+            .catch((err) => {
+                console.log("Error in db.addAvatar: ", err);
+                res.json({ success: false });
+            });
+    } else {
+        res.json({
+            success: false,
+        });
+    }
+});
+
+app.post("/user", (req, res) => {
+    console.log("req.session.userId: ", req.session.userId);
+
+    db.getUser(req.session.userId)
+        .then((result) => {
+            console.log("result in /user: ", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => {
+            console.log("ERROR in /user getUserInfo: ", err);
         });
 });
 
