@@ -9,6 +9,52 @@ const ses = require("./ses");
 const cryptoRandomString = require("crypto-random-string");
 
 const csurf = require("csurf");
+const s3 = require("./s3");
+const config = require("./config.json");
+const multer = require("multer");
+const path = require("path");
+const uidSafe = require("uid-safe");
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
+
+app.post("/upload-img", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("file", req.file.filename);
+
+    if (req.file) {
+        let filename = req.file.filename;
+        let url = config.s3Url + filename;
+        console.log("json", config.s3Url + filename);
+        let user_id = 1;
+        db.saveProfilePic(user_id, url)
+            .then((results) => {
+                console.log("upload profile pic results:", results.rows[0]);
+                let picUrl = results.rows[0].pic_url;
+                res.json({ picUrl: picUrl });
+            })
+            .catch((err) => {
+                console.log("error in upload pic", err);
+            });
+    } else {
+        res.json({
+            success: false,
+        });
+    }
+});
 
 app.use(
     cookieSession({
@@ -114,8 +160,8 @@ app.post("/login", (req, res) => {
         .then((match) => {
             console.log("match", match);
             if (match) {
-                res.json({ success: true });
                 req.session.userId = id;
+                res.json({ success: true });
             } else {
                 res.json({ success: false });
             }
@@ -129,8 +175,9 @@ app.post("/login", (req, res) => {
 app.post("/resetpassword/step1", (req, res) => {
     console.log("req.body", req.body);
     let email = req.body.email;
-    db.getpass(email)
+    db.getpass(req.body.email)
         .then((result) => {
+            console.log("result in get paass step1", result);
             dbpass = result.rows[0].password;
             id = result.rows[0].id;
             console.log("shilpaaaaa122345", dbpass, id, result.rows[0].email);

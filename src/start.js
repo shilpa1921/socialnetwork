@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 
 import Welcome from "./welcome";
 
+import App from "./app";
+
 let elem;
 const userIsLoggedIn = location.pathname != "/welcome";
 
 if (userIsLoggedIn) {
-    elem = <h1>I will be the logo....</h1>;
+    elem = <App />;
 } else {
     elem = <Welcome />;
 }

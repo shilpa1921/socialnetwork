@@ -45,3 +45,12 @@ module.exports.updatePassword = (email, password) => {
         password,
     ]);
 };
+
+module.exports.saveProfilePic = (user_id, url) => {
+    return db.query(
+        `UPDATE users
+        SET pic_url = $2
+        WHERE id=$1`,
+        [user_id, url]
+    );
+};

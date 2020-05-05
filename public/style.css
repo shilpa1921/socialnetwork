@@ -23,7 +23,23 @@ main {
     margin-left: 25%;
     padding: 25px;
 }
+#logo {
+    width: 400px;
+    margin: 0;
+}
 
+#logo img {
+    height: 60px;
+    width: 100px;
+}
+.profile-pic {
+    float: right;
+    height: 60px;
+    width: 100px;
+    right: 0;
+    top: -85px;
+    position: relative;
+}
 .login {
     text-align: center;
     background-color: lightcoral;
@@ -57,4 +73,23 @@ input {
 #welcome h1 {
     text-align: center;
     color: darkred;
+}
+
+#upload {
+    border: lightseagreen solid 3px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    margin: 30px;
+    padding: 0;
+}
+#file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#close {
+    padding-left: 98%;
+    margin-top: 0;
 }

@@ -23,6 +23,7 @@ export default class Login extends React.Component {
 
     submit() {
         console.log("about to submit", this.state);
+        // e.preventDefault();
         axios.post("/login", this.state).then(({ data }) => {
             console.log("data: ", data);
             if (data.success) {
