@@ -1,24 +1,18 @@
 import React from "react";
+import Logo from "./logo";
+import ProfilePic from "./profilepic";
 
-// pass 'props' as an argument to get access to the info being passed down from the parent (App)
-// we can also use destructuring to pull up the properties inside props
 export default function Presentational({ first, last, imageUrl, toggleModal }) {
-    // console.log('props in Presentational: ', props);
-
-    imageUrl = imageUrl || "default.png";
-    let name = first + " " + last;
+    // console.log("Props in Presentational: ", props);
 
     return (
-        <div>
-            <img
-                className="profile-pic"
-                src={imageUrl}
-                onClick={toggleModal}
-                alt={name}
+        <div className="head">
+            <ProfilePic
+                first={first}
+                last={last}
+                imageUrl={imageUrl}
+                toggleModal={toggleModal}
             />
-            <h2>
-                my name is {first} {last}.
-            </h2>
         </div>
     );
 }

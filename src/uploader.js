@@ -47,7 +47,7 @@ export default class Uploader extends React.Component {
 
     render() {
         return (
-            <div id="upload">
+            <div id="upload-modal-div">
                 <p id="close" onClick={() => this.closeModal()}>
                     X
                 </p>

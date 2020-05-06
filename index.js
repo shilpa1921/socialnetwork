@@ -164,7 +164,7 @@ app.post("/resetpassword/step1", (req, res) => {
                 .then((result) => {
                     console.log("added code successfully", result);
                     let to = result.rows[0].email;
-                    let subject = "Change Password lonk";
+                    let subject = "Change Password link";
                     let text =
                         "This is the  code for your password reset: " +
                         secretCode;
@@ -250,6 +250,26 @@ app.post("/resetpassword/verify", (req, res) => {
         .catch((err) => {
             console.log("Error in db.checkCode: ", err);
         });
+});
+app.post("/saveUserBio", async (req, res) => {
+    let user_id = req.session.userId;
+    let bio = req.body.bio;
+
+    try {
+        const results = await db.saveUserBio(user_id, bio);
+        console.log("saveUserBio results", results.rows[0]);
+
+        res.json(results.rows[0]);
+    } catch (err) {
+        console.log("error in saveUserBio", err);
+    }
+}); //end of saveUserBio
+
+app.get("/logout", (req, res) => {
+    console.log("logout");
+    req.session = null;
+    res.redirect("/");
+    return;
 });
 
 app.listen(8080, function () {

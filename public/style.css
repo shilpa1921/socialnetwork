@@ -1,5 +1,6 @@
 * {
     background-color: linen;
+    box-sizing: border-box;
 }
 
 main {
@@ -84,15 +85,109 @@ input {
     padding: 0;
     width: 50%;
     left: 250px;
-    position: relative;
+    position: absolute;
+    box-sizing: border-box;
 }
 #file {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #close {
-    padding-left: 98%;
+    padding-left: 96%;
+    padding-top: 0;
     margin-top: 0;
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+}
+button {
+    background-color: #000;
+    border: 1px solid #000;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#profilepic {
+    position: relative;
+    top: 150px;
+    display: block;
+    right: 70%;
+}
+#profilepic img {
+    height: 200px;
+    width: 200px;
+    margin: 0;
+}
+#profilepic h2 {
+    left: 75%;
+    top: 150px;
+    position: relative;
+}
+
+#prof-pic-container {
+    border: 2px rgb(85, 85, 85) solid;
+    border-radius: 10px;
+    margin: 20px;
+    top: 30px;
+    float: right;
+    position: relative;
+    cursor: pointer;
+}
+#prof-pic-container:hover {
+    background-color: white;
+}
+
+#prof-pic-div {
+    text-align: center;
+}
+
+.profile-pic {
+    /* border-bottom: 2px rgb(85, 85, 85) solid; */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin: 20px;
+    background-color: whitesmoke;
+    /* padding: 10px; */
+    max-height: 150px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+#prof-pic-div p {
+    /* border: 1px red solid; */
+    margin: 0;
+}
+
+/* ------------------ Upload Profile Pic Modal ------------------ */
+#upload-container {
+    border: 1px blue solid;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-modal-div {
+    border: 2px grey solid;
+    border-radius: 20px;
+
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+#app-component {
+    height: 100vh;
 }

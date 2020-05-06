@@ -3,6 +3,8 @@ import axios from "./axios";
 import Presentational from "./presentational";
 import Uploader from "./uploader";
 import Logo from "./logo";
+import Profile from "./profile";
+// import BioEditor from "./bioeditor";
 
 export default class App extends React.Component {
     constructor() {
@@ -20,6 +22,7 @@ export default class App extends React.Component {
                 first: res.data.first_name,
                 last: res.data.last_name,
                 imageUrl: res.data.pic_url,
+                bio: res.data.bio,
             });
         });
     }
@@ -37,6 +40,12 @@ export default class App extends React.Component {
             imageUrl: arg,
         });
     }
+    receiveBio(arg) {
+        console.log("I'm running in App: ", arg);
+        this.setState({
+            bio: arg,
+        });
+    }
     methodInApp(arg) {
         console.log("Im running in App!!!!! and my argument is: ", arg);
     }
@@ -45,26 +54,29 @@ export default class App extends React.Component {
         return (
             <div>
                 <Logo />
-
                 <Presentational
                     first={this.state.first}
                     last={this.state.last}
                     imageUrl={this.state.imageUrl}
                     toggleModal={() => this.toggleModal()}
                 />
-
-                {/* <h1>Hello from App</h1> */}
-                {/* <h2 onClick={() => this.toggleModal()}>
-                    Click here!! Changing uploaderIsVisible state with a
-                    method!!
-                </h2> */}
+                <Profile
+                    first={this.state.first}
+                    last={this.state.last}
+                    imageUrl={this.state.imageUrl}
+                    toggleModal={() => this.toggleModal()}
+                    bio={this.state.bio}
+                    receiveBio={(arg) => this.receiveBio(arg)}
+                />
 
                 {this.state.uploaderIsVisible && (
-                    <Uploader
-                        methodInApp={this.methodInApp}
-                        receivePicture={(arg) => this.receivePicture(arg)}
-                        toggleModal={() => this.toggleModal()}
-                    />
+                    <div id="upload-container">
+                        <Uploader
+                            methodInApp={this.methodInApp}
+                            receivePicture={(arg) => this.receivePicture(arg)}
+                            toggleModal={() => this.toggleModal()}
+                        />
+                    </div>
                 )}
             </div>
         );
