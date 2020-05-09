@@ -5,6 +5,8 @@
 
 main {
     min-height: 100vh;
+    padding: 20px;
+    margin: 30px;
 }
 
 .reg {
@@ -23,10 +25,6 @@ main {
     max-width: 50%;
     margin-left: 25%;
     padding: 25px;
-}
-#logo {
-    width: 400px;
-    margin: 0;
 }
 
 #logo img {
@@ -115,7 +113,7 @@ button {
 
 #profilepic {
     position: relative;
-    top: 150px;
+    top: 10px;
     display: block;
     right: 70%;
 }
@@ -124,12 +122,17 @@ button {
     width: 200px;
     margin: 0;
 }
-#profilepic h2 {
-    left: 75%;
-    top: 150px;
+
+#addbio {
+    border: lightseagreen 3px solid;
+    padding: 0;
+    width: 70px;
+    text-align: center;
+    background-color: maroon;
+    color: mediumaquamarine;
+    left: 20%;
     position: relative;
 }
-
 #prof-pic-container {
     border: 2px rgb(85, 85, 85) solid;
     border-radius: 10px;
@@ -188,6 +191,22 @@ button {
     position: relative;
 }
 
-#app-component {
+#app-componenet {
     height: 100vh;
+}
+
+#bio {
+    font-style: italic;
+    color: tomato;
+    font-size: 40px;
+}
+
+#pic-in-otherprofile {
+    height: 250px;
+    width: 300px;
+}
+
+#pic-in-profile {
+    height: 300px;
+    width: 300px;
 }

@@ -69,6 +69,11 @@ app.get("/welcome", (req, res) => {
         res.sendFile(__dirname + "/index.html");
     }
 });
+app.get("/logout", (req, res) => {
+    req.session.userId = null;
+    console.log("id in logout", req.session.userId);
+    res.redirect("/");
+});
 
 app.get("*", function (req, res) {
     if (!req.session.userId) {
@@ -253,11 +258,11 @@ app.post("/resetpassword/verify", (req, res) => {
 });
 app.post("/saveUserBio", async (req, res) => {
     let user_id = req.session.userId;
-    let bio = req.body.bio;
-
+    let bio = req.body.draftBio;
+    console.log("bio in index", req.body);
     try {
         const results = await db.saveUserBio(user_id, bio);
-        console.log("saveUserBio results", results.rows[0]);
+        console.log("saveUserBio results", results);
 
         res.json(results.rows[0]);
     } catch (err) {
@@ -265,11 +270,25 @@ app.post("/saveUserBio", async (req, res) => {
     }
 }); //end of saveUserBio
 
-app.get("/logout", (req, res) => {
-    console.log("logout");
-    req.session = null;
-    res.redirect("/");
-    return;
+app.post("/user/:id", (req, res) => {
+    console.log("id in other profile", req.params.id);
+    let id = req.params.id;
+
+    if (id == req.session.userId) {
+        res.json({ selfuser: true });
+    } else {
+        db.getUser(id)
+            .then((result) => {
+                console.log("result in /user:id: ", result.rows[0]);
+                if (result.rows[0] == undefined) {
+                    res.json({ noMatch: true });
+                }
+                res.json(result.rows[0]);
+            })
+            .catch((err) => {
+                console.log("ERROR in /user:id getUserInfo: ", err);
+            });
+    }
 });
 
 app.listen(8080, function () {
