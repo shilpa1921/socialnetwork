@@ -1,5 +1,5 @@
 import React from "react";
-import ProfilePic from "./profilePic";
+import Presentational from "./presentational";
 import BioEditor from "./bioeditor";
 export default function Profie({
     first,
@@ -9,19 +9,18 @@ export default function Profie({
     bio,
     receiveBio,
 }) {
+    imageUrl = imageUrl || "default.png";
     console.log("props in profile", bio, first, receiveBio);
     return (
-        <div id="profilepic">
-            <ProfilePic
-                first={first}
-                last={last}
-                imageUrl={imageUrl}
-                toggleModal={toggleModal}
-            />
-            <h2>
-                my name is {first} {last}.
+        <div>
+            <h1>
+                {first} {last}
+            </h1>
+            <img id="pic-in-profile" src={imageUrl}></img>
+
+            <div id="bioeditor">
                 <BioEditor bio={bio} receiveBio={receiveBio} />
-            </h2>
+            </div>
         </div>
     );
 }

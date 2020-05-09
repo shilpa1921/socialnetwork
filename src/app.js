@@ -4,7 +4,10 @@ import Presentational from "./presentational";
 import Uploader from "./uploader";
 import Logo from "./logo";
 import Profile from "./profile";
-// import BioEditor from "./bioeditor";
+import OtherProfile from "./other-profile";
+import Logout from "./logout";
+
+import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends React.Component {
     constructor() {
@@ -41,7 +44,7 @@ export default class App extends React.Component {
         });
     }
     receiveBio(arg) {
-        console.log("I'm running in App: ", arg);
+        console.log("I'm running in bio App: ", arg);
         this.setState({
             bio: arg,
         });
@@ -52,32 +55,45 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <Logo />
-                <Presentational
-                    first={this.state.first}
-                    last={this.state.last}
-                    imageUrl={this.state.imageUrl}
-                    toggleModal={() => this.toggleModal()}
-                />
-                <Profile
-                    first={this.state.first}
-                    last={this.state.last}
-                    imageUrl={this.state.imageUrl}
-                    toggleModal={() => this.toggleModal()}
-                    bio={this.state.bio}
-                    receiveBio={(arg) => this.receiveBio(arg)}
-                />
+            <div id="app-componenet">
+                <BrowserRouter>
+                    <Presentational
+                        first={this.state.first}
+                        last={this.state.last}
+                        imageUrl={this.state.imageUrl}
+                        toggleModal={() => this.toggleModal()}
+                    />
 
-                {this.state.uploaderIsVisible && (
-                    <div id="upload-container">
-                        <Uploader
-                            methodInApp={this.methodInApp}
-                            receivePicture={(arg) => this.receivePicture(arg)}
-                            toggleModal={() => this.toggleModal()}
-                        />
-                    </div>
-                )}
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <Profile
+                                first={this.state.first}
+                                last={this.state.last}
+                                imageUrl={this.state.imageUrl}
+                                toggleModal={() => this.toggleModal()}
+                                bio={this.state.bio}
+                                receiveBio={(arg) => this.receiveBio(arg)}
+                            />
+                        )}
+                    />
+
+                    <Route exact path="/user/:id" component={OtherProfile} />
+
+                    {this.state.uploaderIsVisible && (
+                        <div id="upload-container">
+                            <Uploader
+                                methodInApp={this.methodInApp}
+                                receivePicture={(arg) =>
+                                    this.receivePicture(arg)
+                                }
+                                toggleModal={() => this.toggleModal()}
+                            />
+                        </div>
+                    )}
+                    <Logout />
+                </BrowserRouter>
             </div>
         );
     }

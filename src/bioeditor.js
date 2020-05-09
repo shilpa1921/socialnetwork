@@ -6,7 +6,7 @@ export default class BioEditor extends React.Component {
         super(props);
         this.state = {
             textAreaVisible: false,
-            draftBio: "",
+            draftBio: null,
         };
         console.log("BIOEDITOR state", this.state, props);
     }
@@ -15,7 +15,7 @@ export default class BioEditor extends React.Component {
     handleChange(e) {
         this.setState(
             {
-                [e.target.name]: e.target.value,
+                draftBio: e.target.value,
             },
             () => console.log("this.state", this.state)
         );
@@ -37,10 +37,7 @@ export default class BioEditor extends React.Component {
                 console.log("saveUserBio response.data:", response.data);
 
                 if (response.data.bio) {
-                    this.props.saveBio(response.data.bio);
-                    this.setState({
-                        draftBio: response.data.bio,
-                    });
+                    this.props.receiveBio(response.data.bio);
 
                     this.toggleText();
                 } else {
@@ -54,59 +51,29 @@ export default class BioEditor extends React.Component {
 
     render() {
         return (
-            <div className="bioeddiv">
-                {this.state.draftBio == "" &&
-                    this.state.textAreaVisible == false && (
-                        <div className="nobio">
-                            <button onClick={() => this.toggleText()}>
-                                Tell us about yourself
-                            </button>
+            <div className="bio-edit">
+                {!this.props.bio && (
+                    <div id="addbio" onClick={() => this.toggleText()}>
+                        Add your bio
+                    </div>
+                )}
+                {this.props.bio && (
+                    <div className="showbio">
+                        <div id="bio">{this.props.bio}</div>
+                        <div id="addbio" onClick={() => this.toggleText()}>
+                            Edit
                         </div>
-                    )}
-                {this.state.draftBio == "" &&
-                    this.state.textAreaVisible == true && (
-                        <div
-                            className="writebio"
+                    </div>
+                )}
+                {this.state.textAreaVisible && (
+                    <div className="enterbio">
+                        <textarea
+                            defaultValue={this.props.bio}
                             onChange={(e) => this.handleChange(e)}
-                        >
-                            <textarea
-                                name="bio"
-                                type="text"
-                                placeholder="tell us about yourself..."
-                                //defaultValue={this.props.bio}
-                            />
-
-                            <button onClick={() => this.saveBio()}>
-                                Save your profile
-                            </button>
-                        </div>
-                    )}
-                {this.state.draftBio !== "" &&
-                    this.state.textAreaVisible == false && (
-                        <div className="savedbio">
-                            {bio}
-                            <button onClick={() => this.toggleText()}>
-                                Edit your profile
-                            </button>
-                        </div>
-                    )}
-                {this.state.draftBio !== "" &&
-                    this.state.textAreaVisible == true && (
-                        <div
-                            className="editbio"
-                            onChange={(e) => this.handleChange(e)}
-                        >
-                            <textarea
-                                name="bio"
-                                type="text"
-                                defaultValue={this.props.bio}
-                            />
-
-                            <button onClick={() => this.saveBio()}>
-                                Save your profile
-                            </button>
-                        </div>
-                    )}
+                        />
+                        <button onClick={(e) => this.saveBio(e)}>Save</button>{" "}
+                    </div>
+                )}
             </div>
         );
     }
