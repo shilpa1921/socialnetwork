@@ -8,6 +8,7 @@ export default class Registration extends React.Component {
         super();
         this.state = {
             error: false,
+            error1: false,
         };
     }
 
@@ -28,6 +29,10 @@ export default class Registration extends React.Component {
             console.log("data: ", data);
             if (data.success) {
                 location.replace("/");
+            } else if (data.duplicate) {
+                this.setState({
+                    error1: true,
+                });
             } else {
                 this.setState({
                     error: true,
@@ -41,6 +46,9 @@ export default class Registration extends React.Component {
             <div className="reg">
                 <h2 id="heading">Please register here</h2>
                 {this.state.error && <div>Oops something went wrong!</div>}
+                {this.state.error1 && (
+                    <div>Email address is already exists please login!</div>
+                )}
                 <input
                     name="first"
                     autoComplete="off"

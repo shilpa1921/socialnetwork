@@ -9,3 +9,10 @@ test("renders img with src set to '/puppy.png' when it is passed that as a prop"
         "/puppy.png"
     );
 });
+
+test("renders img with src set to /default.jpg when no url prop is present", () => {
+    const { container } = render(<Presentational />);
+    expect(container.querySelector("img").getAttribute("src")).toBe(
+        "/default.jpg"
+    );
+});

@@ -6,6 +6,7 @@ import Logo from "./logo";
 import Profile from "./profile";
 import OtherProfile from "./other-profile";
 import Logout from "./logout";
+import FindPeople from "./find-people";
 
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -80,6 +81,7 @@ export default class App extends React.Component {
                     />
 
                     <Route exact path="/user/:id" component={OtherProfile} />
+                    <Route exact path="/users" component={FindPeople} />
 
                     {this.state.uploaderIsVisible && (
                         <div id="upload-container">

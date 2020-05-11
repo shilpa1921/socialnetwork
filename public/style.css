@@ -210,3 +210,17 @@ button {
     height: 300px;
     width: 300px;
 }
+
+#findPeople {
+    display: inline-block;
+}
+
+.profilepic1 {
+    height: 150px;
+    width: 150px;
+    margin: 20px;
+}
+#list {
+    left: 20px;
+    position: relative;
+}

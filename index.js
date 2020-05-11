@@ -110,7 +110,7 @@ app.post("/register", (req, res) => {
                     })
                     .catch((err) => {
                         console.log("Error in post registration ", err);
-                        res.json({ success: false });
+                        res.json({ duplicate: true });
                     });
             });
     } else {
@@ -288,6 +288,22 @@ app.post("/user/:id", (req, res) => {
             .catch((err) => {
                 console.log("ERROR in /user:id getUserInfo: ", err);
             });
+    }
+});
+
+app.post("/findpeople", (req, res) => {
+    console.log("shilpa in find people", req.body.user);
+    let id = req.session.userId;
+    if (req.body.user) {
+        db.getMatchingActors(req.body.user).then((results) => {
+            console.log("results in findpeople search", results.rows);
+            res.json(results.rows);
+        });
+    } else {
+        db.recentjoiners(id).then((result) => {
+            console.log("results in findpeople", result.rows);
+            res.json(result.rows);
+        });
     }
 });
 

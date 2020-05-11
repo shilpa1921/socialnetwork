@@ -10,7 +10,7 @@ export default function ProfilePic({ first, last, imageUrl, toggleModal }) {
 
     return (
         <img
-            className="profile-pic"
+            className="profilepic1"
             src={imageUrl}
             onClick={toggleModal}
             alt={name}

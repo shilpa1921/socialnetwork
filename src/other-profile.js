@@ -9,6 +9,7 @@ class OtherProfile extends Component {
         this.state = {
             selfuser: false,
         };
+        console.log("props in other profilr", props);
     }
 
     componentDidMount() {

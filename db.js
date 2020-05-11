@@ -67,3 +67,16 @@ module.exports.saveUserBio = (user_id, bio) => {
         [user_id, bio]
     );
 };
+
+module.exports.recentjoiners = (id) => {
+    return db.query(
+        `SELECT * FROM users WHERE id != $1 ORDER BY id DESC LIMIT 3`,
+        [id]
+    );
+};
+
+module.exports.getMatchingActors = (val) => {
+    return db.query(`SELECT * FROM USERS WHERE first_name ILIKE $1;`, [
+        val + "%",
+    ]);
+};
