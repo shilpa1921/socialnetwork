@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import axios from "./axios";
 import Profile from "./profile";
 import Logout from "./logout";
+import FrindshipButton from "./friend-button";
 
 class OtherProfile extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class OtherProfile extends Component {
                         src={this.state.imageUrl}
                     ></img>
                     <h2>{this.state.bio}</h2>
+                    <FrindshipButton otherUserId={this.props.match.params.id} />
                 </div>
             </Fragment>
         );

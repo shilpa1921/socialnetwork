@@ -5,7 +5,8 @@ import ProfilePic from "./profilePic";
 export default function FindPeople() {
     const [user, setUser] = useState("");
     const [users, setUsers] = useState([]);
-
+    const [newarriver, setNewarriver] = useState(true);
+    const [search, setSearch] = useState(false);
     useEffect(() => {
         let abort;
         console.log("useEffect runs!");
@@ -16,6 +17,10 @@ export default function FindPeople() {
                 setUsers(data);
             }
         });
+        if (user == "") {
+            setSearch(false);
+            setNewarriver(true);
+        }
 
         return () => {
             abort = true;
@@ -26,12 +31,16 @@ export default function FindPeople() {
         <div>
             <p>Find People!!</p>
             <input
-                onChange={(e) => setUser(e.target.value)}
+                onChange={(e) => {
+                    setNewarriver(false);
+                    setSearch(true);
+                    setUser(e.target.value);
+                }}
                 placeholder="type the name"
             />
-            <p>Check out who just joined</p>
-            {/* <input onChange={(e) => setFirst(e.target.value)} />
-            <input onChange={(e) => setCountry(e.target.value)} /> */}
+            {newarriver && <p>Check out who just joined</p>}
+            {search && <p>People to whom you searched</p>}
+
             <ul>
                 {users.map((user) => (
                     <div id="findPeople" key={user.id}>
@@ -41,6 +50,7 @@ export default function FindPeople() {
                                     first={user.first_name}
                                     last={user.last_name}
                                     imageUrl={user.pic_url}
+                                    id={user.id}
                                 />
                             </div>
                             <div id="list">

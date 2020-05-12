@@ -6,6 +6,8 @@ import Logo from "./logo";
 import Profile from "./profile";
 import OtherProfile from "./other-profile";
 import Logout from "./logout";
+import { HashRouter, Link } from "react-router-dom";
+
 import FindPeople from "./find-people";
 
 import { BrowserRouter, Route } from "react-router-dom";
@@ -95,6 +97,10 @@ export default class App extends React.Component {
                         </div>
                     )}
                     <Logout />
+
+                    <Link to="/users">users</Link>
+                    <br></br>
+                    <Link to="/">Profile</Link>
                 </BrowserRouter>
             </div>
         );

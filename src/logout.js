@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function Logout() {
-    return <a href="/logout">Logout</a>;
+    return (
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    );
 }

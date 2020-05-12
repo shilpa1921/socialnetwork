@@ -75,8 +75,45 @@ module.exports.recentjoiners = (id) => {
     );
 };
 
-module.exports.getMatchingActors = (val) => {
-    return db.query(`SELECT * FROM USERS WHERE first_name ILIKE $1;`, [
-        val + "%",
-    ]);
+module.exports.getMatchingActors = (val, id) => {
+    return db.query(
+        `SELECT * FROM USERS WHERE id != $2 AND first_name ILIKE $1;`,
+        [val + "%", id]
+    );
 };
+
+module.exports.friendshipmatch = (userId, id) => {
+    return db.query(
+        `SELECT * FROM friendships WHERE (receiver_id = $1 AND sender_id = $2) OR (receiver_id = $2 AND sender_id = $1)`,
+        [userId, id]
+    );
+};
+
+module.exports.addFriendsRow = (receiver_id, sender_id) => {
+    return db.query(
+        `INSERT INTO friendships (receiver_id, sender_id) VALUES ($1, $2) RETURNING *;`,
+        [receiver_id, sender_id]
+    );
+};
+
+module.exports.acceptFriend = (receiver_id, sender_id) => {
+    return db.query(
+        `UPDATE friendships SET accepted = TRUE 
+        WHERE (receiver_id = $1 AND sender_id = $2) 
+        OR (receiver_id = $2 AND sender_id = $1);`,
+        [receiver_id, sender_id]
+    );
+};
+
+module.exports.cancelFriend = (receiver_id, sender_id) => {
+    return db.query(
+        `DELETE FROM friendships WHERE 
+        (receiver_id = $1 AND sender_id = $2) 
+        OR (receiver_id = $2 AND sender_id = $1);`,
+        [receiver_id, sender_id]
+    );
+};
+
+// SELECT * FROM friendships
+// WHERE (receiver_id = $1 AND sender_id = $2)
+// OR (receiver_id = $2 AND sender_id = $1)

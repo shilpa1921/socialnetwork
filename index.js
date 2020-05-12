@@ -291,11 +291,70 @@ app.post("/user/:id", (req, res) => {
     }
 });
 
+app.post(`/friendshipstatus/:id`, (req, res) => {
+    console.log("id in  friendshipstatus", req.params.id);
+    db.friendshipmatch(req.session.userId, req.params.id).then((result) => {
+        console.log("result in friendshipstatus", result);
+        if (result.rowCount == 0) {
+            res.json({ text: " Make friend request" });
+        } else if (
+            result.rows[0].accepted === false &&
+            result.rows[0].sender_id == req.params.id
+        ) {
+            res.json({ text: "Accept Friend Request" });
+        } else if (
+            result.rows[0].accepted === false &&
+            result.rows[0].receiver_id == req.params.id
+        ) {
+            res.json({ text: "Cancel Friend Request" });
+        } else {
+            res.json({ text: "End Friendship" });
+        }
+    });
+});
+
+app.post("/friendship/:id", (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    console.log("This is the text: ", text);
+    if (text == " Make friend request") {
+        return db
+            .addFriendsRow(id, req.session.userId)
+            .then(({ rows }) => {
+                console.log("db.addFriendsRow was succesful: ", rows);
+                res.json({ text: "Cancel Friend Request" });
+            })
+            .catch((err) => {
+                console.log("Error in db.addFriendsRow: ", err);
+            });
+    } else if (text == "Cancel Friend Request" || text == "End Friendship") {
+        return db
+            .cancelFriend(id, req.session.userId)
+            .then(() => {
+                console.log("cancel friend is success");
+                res.json({ text: " Make friend request" });
+            })
+            .catch((err) => {
+                console.log("Error in cancelFriend: ", err);
+            });
+    } else if (text == "Accept Friend Request") {
+        return db
+            .acceptFriend(id, req.session.userId)
+            .then(() => {
+                console.log("updation is  successful!");
+                res.json({ text: "End Friendship" });
+            })
+            .catch((err) => {
+                console.log("Error in acceptFriend: ", err);
+            });
+    }
+});
+
 app.post("/findpeople", (req, res) => {
     console.log("shilpa in find people", req.body.user);
     let id = req.session.userId;
     if (req.body.user) {
-        db.getMatchingActors(req.body.user).then((results) => {
+        db.getMatchingActors(req.body.user, id).then((results) => {
             console.log("results in findpeople search", results.rows);
             res.json(results.rows);
         });
