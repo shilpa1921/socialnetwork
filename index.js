@@ -122,8 +122,7 @@ app.post("/login", (req, res) => {
 
     let email = req.body.email;
     let password = req.body.password;
-    console.log("shilpa", password);
-    console.log("shilpa2", email);
+
     let dbpass;
 
     db.getpass(email)

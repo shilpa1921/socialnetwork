@@ -7,6 +7,7 @@ export default class BioEditor extends React.Component {
         this.state = {
             textAreaVisible: false,
             draftBio: null,
+            disapper: false,
         };
         console.log("BIOEDITOR state", this.state, props);
     }
@@ -52,8 +53,16 @@ export default class BioEditor extends React.Component {
     render() {
         return (
             <div className="bio-edit">
-                {!this.props.bio && (
-                    <div id="addbio" onClick={() => this.toggleText()}>
+                {!this.props.bio && !this.state.disapper && (
+                    <div
+                        id="addbio"
+                        onClick={() =>
+                            this.setState({
+                                textAreaVisible: true,
+                                disapper: true,
+                            })
+                        }
+                    >
                         Add your bio
                     </div>
                 )}
