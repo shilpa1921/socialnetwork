@@ -129,11 +129,20 @@ module.exports.getFriends = (userId) => {
     );
 };
 
-module.exports.addChat = (userId, newMsg) => {
+module.exports.addChat = (newMsg, userId) => {
     return db.query(
         `
-    INSERT INTO chat (user_id, msg)
+    INSERT INTO chat (msg, user_id)
     VALUES($1, $2) RETURNING *`,
-        [userId, newMsg]
+        [newMsg, userId]
+    );
+};
+
+module.exports.getLastMessages = () => {
+    return db.query(
+        `SELECT chat.id AS chats_id, first_name, last_name, pic_url, msg, user_id, chat.created_at 
+        FROM users
+        JOIN chat 
+        ON users.id = user_id ORDER BY chat.id DESC LIMIT 10;`
     );
 };

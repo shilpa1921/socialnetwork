@@ -7,8 +7,8 @@ const { hash, compare } = require("./bc");
 const db = require("./db");
 const ses = require("./ses");
 const cryptoRandomString = require("crypto-random-string");
-const server = require('http').Server(app);
-const io = require('socket.io')(server, { origins: 'localhost:8080' });
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 
 const csurf = require("csurf");
 const s3 = require("./s3");
@@ -36,11 +36,11 @@ const uploader = multer({
 
 const cookieSessionMiddleware = cookieSession({
     secret: `I'm always angry.`,
-    maxAge: 1000 * 60 * 60 * 24 * 90
+    maxAge: 1000 * 60 * 60 * 24 * 90,
 });
 
 app.use(cookieSessionMiddleware);
-io.use(function(socket, next) {
+io.use(function (socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
 
@@ -386,40 +386,48 @@ server.listen(8080, function () {
     console.log("I'm listening.");
 });
 
-
-
-io.on('connection', function(socket) {
+io.on("connection", function (socket) {
     console.log(`socket with the id ${socket.id} is now connected`);
 
-   if(!socket.request.session.userId){
-       return socket.disconnect(true);
-   }
-   const userId = socket.request.session.userId;
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+    const userId = socket.request.session.userId;
 
-
-   //insert code to retrive last ten msg!!
-
-//    db.getLastTen().then(data = >{
-//     io.socket.emit("chatMesseges", data.rows);
-// });
-
-socket.on("my amazing chat messeges", newMsg =>{
-    console.log("this msg comming from chat.js", newMsg);
-    console.log("userId of sender", userId);
-
-    db.addChat(userId, newMsg).then((result)=>{
-        console.log("result in addChat", result);
-    }).catch((err)=>{
-        console.log("err in addChat db", err);
+    db.getLastMessages().then(({ rows }) => {
+        console.log("Rows: ", rows);
+        let lastMsgs = rows.reverse(rows);
+        io.sockets.emit("chatMessages", lastMsgs);
     });
-    io.sockets.emit('addChatMsg', newMsg);
-    
-    
-});
 
+    socket.on("my amazing chat messeges", (newMsg) => {
+        console.log("this msg comming from chat.js", newMsg);
+        console.log("userId of sender", userId);
 
+        return db
+            .addChat(newMsg, userId)
+            .then((res) => {
+                console.log("result in addChat", res.rows[0]);
+                let msginfo = {
+                    chats_id: res.rows[0].id,
+                    msg: res.rows[0].msg,
+                    user_id: res.rows[0].user_id,
+                    created_at: res.rows[0].created_at,
+                };
 
-
-
-   
+                db.getUser(userId).then((result) => {
+                    console.log("results in getuser info in chat", result);
+                    let userAndChatInfo = {
+                        ...msginfo,
+                        first_name: result.rows[0].first_name,
+                        last_name: result.rows[0].last_name,
+                        pic_url: result.rows[0].pic_url,
+                    };
+                    io.sockets.emit("chatMessage", userAndChatInfo);
+                });
+            })
+            .catch((err) => {
+                console.log("err in addChat db", err);
+            });
+    });
 });

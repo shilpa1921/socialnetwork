@@ -1,10 +1,10 @@
 // import React from "react";
 import * as io from "socket.io-client";
-// import { chatMessages, chatMessage } from './actions';
+import { chatMessages, chatMessage } from "./actions";
 
 export let socket;
 
-export const init = store => {
+export const init = (store) => {
     if (!socket) {
         socket = io.connect();
 
@@ -21,11 +21,12 @@ export const init = store => {
         //         chatMessage(msg)
         //     )
         // );
+        socket.on("chatMessages", (msgs) => store.dispatch(chatMessages(msgs)));
 
-          socket.on('addChatMsg', newMsg => {
+        socket.on("chatMessage", (userAndChatInfo) => {
             console.log(`
-            I can see my new chat message in the client! I'm about to start the whole Redux process by dispatching here. My msg is ${newMsg}`
-            );
+            I can see my new chat message in the client! I'm about to start the whole Redux process by dispatching here. My msg is ${userAndChatInfo}`);
+            store.dispatch(chatMessage(userAndChatInfo));
         });
     }
 };

@@ -26,6 +26,20 @@ export async function acceptFriendRequest(id) {
     };
 }
 
+export function chatMessages(msgs) {
+    return {
+        type: "GET_LAST_MESSAGES",
+        msgs,
+    };
+}
+
+export function chatMessage(userAndChatInfo) {
+    return {
+        type: "ADD_NEW_MESSAGE",
+        userAndChatInfo,
+    };
+}
+
 export async function unfriend(id) {
     const { data } = await axios.post(`/friendship/${id}`, {
         text: "End Friendship",

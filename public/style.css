@@ -7,8 +7,8 @@ main {
     min-height: 100vh;
     padding: 20px;
     margin: 30px;
-    margin-left:60px;
-    margin-right:60px
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
 .reg {
@@ -37,7 +37,7 @@ main {
     float: right;
     height: 60px;
     width: 100px;
-   
+
     position: relative;
 }
 .login {
@@ -148,17 +148,15 @@ button {
 }
 #save {
     position: relative;
-    
 }
 
-
-.chat-messeges-container{
-    height:100px;
-    text-align:center;
-    border:solid red 2px;
-    padding:20px;
-    width:80%;
-    overflow-y:scroll;
+.chat-messeges-container {
+    height: 300px;
+    text-align: center;
+    border: solid red 2px;
+    padding: 20px;
+    width: 80%;
+    overflow-y: scroll;
 }
 
 #prof-pic-container {
@@ -183,7 +181,6 @@ button {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
-  
 
     background-color: whitesmoke;
     /* padding: 10px; */
@@ -271,18 +268,12 @@ ul {
     grid-gap: 10px;
     font-size: 20px;
     position: relative;
-    
-   
 }
 
-
-
-
-#presentational{
+#presentational {
     display: grid;
     grid-template-columns: 1fr 100px;
     grid-gap: 10px;
-
 }
 #navbox {
     /* border: blueviolet solid 2px; */
@@ -291,4 +282,25 @@ ul {
     padding-right: 20px;
     background-color: burlywood;
     text-decoration: none;
+}
+
+#message-unit {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    margin-bottom: 30px;
+}
+
+.profilepicinchat {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+}
+
+#imgandname {
+    text-align: start;
+}
+
+#msg {
+    text-align: start;
+    align-items: center;
 }

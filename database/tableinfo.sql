@@ -30,8 +30,11 @@ CREATE TABLE friendships(
 
 CREATE TABLE chat(
   id SERIAL PRIMARY KEY,
+   msg VARCHAR(500),
   user_id INT NOT NULL REFERENCES users(id),
-  msg VARCHAR(500)
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+ 
 );
 
 
