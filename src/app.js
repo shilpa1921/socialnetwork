@@ -7,6 +7,8 @@ import Profile from "./profile";
 import OtherProfile from "./other-profile";
 import Logout from "./logout";
 import { HashRouter, Link } from "react-router-dom";
+import Friends from "./friends";
+import Chat from "./chat"
 
 import FindPeople from "./find-people";
 
@@ -96,11 +98,8 @@ export default class App extends React.Component {
                             />
                         </div>
                     )}
-                    <Logout />
-
-                    <Link to="/users">users</Link>
-                    <br></br>
-                    <Link to="/">Profile</Link>
+                    <Route path="/friends" render={() => <Friends />} />
+                    <Route path="/chat" render={() => <Chat />} />
                 </BrowserRouter>
             </div>
         );

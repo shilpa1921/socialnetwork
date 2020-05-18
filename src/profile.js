@@ -16,10 +16,13 @@ export default function Profie({
             <h1>
                 {first} {last}
             </h1>
-            <img id="pic-in-profile" src={imageUrl}></img>
-
-            <div id="bioeditor">
-                <BioEditor bio={bio} receiveBio={receiveBio} />
+            <div id="bio-and-pic">
+                <div>
+                    <img id="pic-in-profile" src={imageUrl}></img>
+                </div>
+                <div id="bioeditor">
+                    <BioEditor bio={bio} receiveBio={receiveBio} />
+                </div>
             </div>
         </div>
     );

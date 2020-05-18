@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
+import {init} from "./socket.js"
 
 const store = createStore(
     reducer,
@@ -19,6 +20,7 @@ let elem;
 const userIsLoggedIn = location.pathname != "/welcome";
 
 if (userIsLoggedIn) {
+    init(store);
     elem = (
         <Provider store={store}>
             <App />

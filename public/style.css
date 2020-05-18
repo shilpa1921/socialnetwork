@@ -7,6 +7,8 @@ main {
     min-height: 100vh;
     padding: 20px;
     margin: 30px;
+    margin-left:60px;
+    margin-right:60px
 }
 
 .reg {
@@ -35,8 +37,7 @@ main {
     float: right;
     height: 60px;
     width: 100px;
-    right: 0;
-    top: -85px;
+   
     position: relative;
 }
 .login {
@@ -65,6 +66,18 @@ main {
     margin-top: 25px;
 }
 
+#link {
+    color: blue;
+    background-color: lightcoral;
+}
+
+#bio-and-pic {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+}
+#bioeditor {
+    padding: 30px;
+}
 input {
     margin: 10px;
 }
@@ -125,14 +138,29 @@ button {
 
 #addbio {
     border: lightseagreen 3px solid;
-    padding: 0;
+
     width: 70px;
     text-align: center;
     background-color: maroon;
     color: mediumaquamarine;
-    left: 20%;
+    left: 30%;
     position: relative;
 }
+#save {
+    position: relative;
+    
+}
+
+
+.chat-messeges-container{
+    height:100px;
+    text-align:center;
+    border:solid red 2px;
+    padding:20px;
+    width:80%;
+    overflow-y:scroll;
+}
+
 #prof-pic-container {
     border: 2px rgb(85, 85, 85) solid;
     border-radius: 10px;
@@ -154,7 +182,9 @@ button {
     /* border-bottom: 2px rgb(85, 85, 85) solid; */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin: 20px;
+    position: relative;
+  
+
     background-color: whitesmoke;
     /* padding: 10px; */
     max-height: 150px;
@@ -215,6 +245,15 @@ button {
     display: inline-block;
 }
 
+#search {
+    border: lightseagreen 3px solid;
+    margin: 0;
+}
+
+ul {
+    padding: 0;
+}
+
 .profilepic1 {
     height: 150px;
     width: 150px;
@@ -223,4 +262,33 @@ button {
 #list {
     left: 20px;
     position: relative;
+    font-size: 20px;
+}
+
+#nav {
+    display: grid;
+    grid-template-columns: 1fr 100px 85px 100px 100px;
+    grid-gap: 10px;
+    font-size: 20px;
+    position: relative;
+    
+   
+}
+
+
+
+
+#presentational{
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    grid-gap: 10px;
+
+}
+#navbox {
+    /* border: blueviolet solid 2px; */
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: burlywood;
+    text-decoration: none;
 }

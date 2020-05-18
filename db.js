@@ -117,3 +117,23 @@ module.exports.cancelFriend = (receiver_id, sender_id) => {
 // SELECT * FROM friendships
 // WHERE (receiver_id = $1 AND sender_id = $2)
 // OR (receiver_id = $2 AND sender_id = $1)
+module.exports.getFriends = (userId) => {
+    return db.query(
+        `SELECT users.id, first_name, last_name, pic_url, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`,
+        [userId]
+    );
+};
+
+module.exports.addChat = (userId, newMsg) => {
+    return db.query(
+        `
+    INSERT INTO chat (user_id, msg)
+    VALUES($1, $2) RETURNING *`,
+        [userId, newMsg]
+    );
+};

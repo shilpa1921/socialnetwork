@@ -1,5 +1,7 @@
 import React from "react";
 import Logo from "./logo";
+import Logout from "./logout";
+import { HashRouter, Link } from "react-router-dom";
 
 export default function Presentational({ first, last, imageUrl, toggleModal }) {
     imageUrl = imageUrl || "/default.png";
@@ -7,14 +9,18 @@ export default function Presentational({ first, last, imageUrl, toggleModal }) {
 
     return (
         <div id="presentational">
-            <Logo />
+            <div>
+                    <Logo />
+            </div>
 
-            <img
-                className="profile-pic"
-                src={imageUrl}
-                onClick={toggleModal}
-                alt={name}
-            />
+            <div>
+                <img
+                    className="profile-pic"
+                    src={imageUrl}
+                    onClick={toggleModal}
+                    alt={name}
+                />
+            </div>
         </div>
     );
 }

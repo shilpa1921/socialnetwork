@@ -29,17 +29,18 @@ export default function FindPeople() {
 
     return (
         <div>
-            <p>Find People!!</p>
+            <h3>Find People!!</h3>
             <input
+                id="search"
                 onChange={(e) => {
                     setNewarriver(false);
                     setSearch(true);
                     setUser(e.target.value);
                 }}
-                placeholder="type the name"
+                placeholder="Search for friend"
             />
-            {newarriver && <p>Check out who just joined</p>}
-            {search && <p>People to whom you searched</p>}
+            {newarriver && <h3>Check out who just joined</h3>}
+            {search && <h3>People to whom you searched</h3>}
 
             <ul>
                 {users.map((user) => (

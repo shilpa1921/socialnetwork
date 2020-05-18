@@ -77,10 +77,14 @@ export default class BioEditor extends React.Component {
                 {this.state.textAreaVisible && (
                     <div className="enterbio">
                         <textarea
+                            rows="4"
+                            cols="50"
                             defaultValue={this.props.bio}
                             onChange={(e) => this.handleChange(e)}
                         />
-                        <button onClick={(e) => this.saveBio(e)}>Save</button>{" "}
+                        <button id="save" onClick={(e) => this.saveBio(e)}>
+                            Save
+                        </button>{" "}
                     </div>
                 )}
             </div>

@@ -64,11 +64,15 @@ export default class Login extends React.Component {
                 <HashRouter>
                     <div id="register">
                         If you do not have an account yet,{" "}
-                        <Link to="/">register here!</Link>
+                        <Link id="link" to="/">
+                            register here!
+                        </Link>
                     </div>
                     <div id="reset">
-                        If you forget your password,clock here to reset{" "}
-                        <Link to="/resetpassword">forgot password!</Link>
+                        If you forget your password,click here
+                        <Link id="link" to="/resetpassword">
+                            forgot password!
+                        </Link>
                     </div>
                 </HashRouter>
             </div>

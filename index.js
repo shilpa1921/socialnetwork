@@ -7,6 +7,8 @@ const { hash, compare } = require("./bc");
 const db = require("./db");
 const ses = require("./ses");
 const cryptoRandomString = require("crypto-random-string");
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
 const csurf = require("csurf");
 const s3 = require("./s3");
@@ -32,12 +34,15 @@ const uploader = multer({
     },
 });
 
-app.use(
-    cookieSession({
-        secret: `I'm always angry.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(compression());
 app.use(express.json());
@@ -365,6 +370,56 @@ app.post("/findpeople", (req, res) => {
     }
 });
 
-app.listen(8080, function () {
+app.post("/pendingfriends", async (req, res) => {
+    console.log("/pendingfriends route hit");
+    let userId = req.session.userId;
+    try {
+        const results = await db.getFriends(userId);
+        console.log("results.rows in pending friends", results.rows);
+        res.json({ allfriends: results.rows });
+    } catch (err) {
+        console.log("error in pendingfriends", err);
+    }
+});
+
+server.listen(8080, function () {
     console.log("I'm listening.");
+});
+
+
+
+io.on('connection', function(socket) {
+    console.log(`socket with the id ${socket.id} is now connected`);
+
+   if(!socket.request.session.userId){
+       return socket.disconnect(true);
+   }
+   const userId = socket.request.session.userId;
+
+
+   //insert code to retrive last ten msg!!
+
+//    db.getLastTen().then(data = >{
+//     io.socket.emit("chatMesseges", data.rows);
+// });
+
+socket.on("my amazing chat messeges", newMsg =>{
+    console.log("this msg comming from chat.js", newMsg);
+    console.log("userId of sender", userId);
+
+    db.addChat(userId, newMsg).then((result)=>{
+        console.log("result in addChat", result);
+    }).catch((err)=>{
+        console.log("err in addChat db", err);
+    });
+    io.sockets.emit('addChatMsg', newMsg);
+    
+    
+});
+
+
+
+
+
+   
 });

@@ -86,7 +86,7 @@ export default class Registration extends React.Component {
                 <HashRouter>
                     <div id="login">
                         You already have an account?{" "}
-                        <Link to="/login">You can log in here!</Link>
+                        <Link to="/login">Login here!</Link>
                     </div>
                 </HashRouter>
             </div>
