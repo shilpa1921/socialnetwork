@@ -201,6 +201,10 @@ app.post("/upload-img", uploader.single("file"), s3.upload, (req, res) => {
         let url = config.s3Url + filename;
         let id = req.session.userId;
         console.log("json", config.s3Url + filename);
+
+        db.archiveProfilePic(id, url).then((results) => {
+            console.log("pic archive worked");
+        });
         db.saveProfilePic(id, url)
             .then((result) => {
                 console.log("url added successfully", result);
@@ -384,9 +388,19 @@ app.post("/pendingfriends", async (req, res) => {
 app.post("/deleteacoount:id", (req, res) => {
     console.log("/deleteacoount route hit", req.params.id);
     var user_id = req.params.id;
-    db.deleteChat(user_id)
+    db.getAllPics(user_id)
         .then((result) => {
-            console.log("result in deletechat", result);
+            console.log("pics in profilepic", result);
+        })
+        .then(() => {
+            db.deletepicInprofilepic(user_id).then((result) => {
+                console.log("result in profilepic", result);
+            });
+        })
+        .then(() => {
+            db.deleteChat(user_id).then((result) => {
+                console.log("result in deletechat", result);
+            });
         })
         .then(() => {
             db.deleteFriends(user_id).then((result) => {
@@ -420,21 +434,21 @@ io.on("connection", function (socket) {
     onlineUsers[socket.id] = userId;
     console.log("onlineUsers", onlineUsers);
 
-    var browsingUserIds = Object.values(onlineUsers);
-    console.log("browsingUserIds", browsingUserIds);
+    var onlineUserIds = Object.values(onlineUsers);
+    console.log("onlineUserIds", onlineUserIds);
     socket.on("disconnect", function () {
         delete onlineUsers[socket.id];
 
-        browsingUserIds = Object.values(onlineUsers);
-        db.getUsersByIds(browsingUserIds).then((data) => {
+        onlineUserIds = Object.values(onlineUsers);
+        db.getUsersByIds(onlineUserIds).then((data) => {
             console.log("DATA.rows in getUsersById", data.rows);
 
             io.sockets.emit("peopleOnline", data.rows);
         });
     });
 
-    console.log("browsingUserIds", browsingUserIds);
-    db.getUsersByIds(browsingUserIds).then((data) => {
+    console.log("onlineUserIds", onlineUserIds);
+    db.getUsersByIds(onlineUserIds).then((data) => {
         console.log("DATA.rows in getUsersById", data.rows);
 
         io.sockets.emit("peopleOnline", data.rows);

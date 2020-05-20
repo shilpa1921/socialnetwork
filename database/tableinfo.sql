@@ -37,6 +37,15 @@ CREATE TABLE chat(
  
 );
 
+DROP TABLE IF EXISTS profilepics;
+
+CREATE TABLE profilepics (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL  REFERENCES users(id),
+    pic_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
 

@@ -189,3 +189,20 @@ module.exports.deleteuser = (user_id) => {
         [user_id]
     );
 };
+
+module.exports.archiveProfilePic = (id, url) => {
+    return db.query(
+        `INSERT INTO profilepics (user_id, pic_url) VALUES ($1, $2)`,
+        [id, url]
+    );
+};
+
+module.exports.getAllPics = (user_id) => {
+    return db.query(` SELECT * FROM profilepics WHERE user_id = $1`, [user_id]);
+};
+
+module.exports.deletepicInprofilepic = (user_id) => {
+    return db.query(` DELETE FROM profilepics WHERE user_id = $1 RETURNING *`, [
+        user_id,
+    ]);
+};
