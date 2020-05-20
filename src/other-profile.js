@@ -41,7 +41,7 @@ class OtherProfile extends Component {
                         id="pic-in-otherprofile"
                         src={this.state.imageUrl}
                     ></img>
-                    <h2>{this.state.bio}</h2>
+                    <h2 id="bio-in-otherpeople">{this.state.bio}</h2>
                     <FrindshipButton otherUserId={this.props.match.params.id} />
                 </div>
             </Fragment>

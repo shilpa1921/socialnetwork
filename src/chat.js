@@ -17,7 +17,7 @@ export default function Chat() {
 
         elemref.current.scrollTop =
             elemref.current.scrollHeight - elemref.current.clientHeight;
-    }, []);
+    }, [chatMessages]);
 
     const keyCheck = (e) => {
         // console.log("value", e.target.value);
@@ -35,7 +35,7 @@ export default function Chat() {
         <div>
             <h2>Welcome to chat</h2>
             <div className="chat-messeges-container" ref={elemref}>
-                <div>
+                <ul>
                     {chatMessages &&
                         chatMessages.map((message) => (
                             <div key={message.chats_id} id="message-unit">
@@ -49,7 +49,7 @@ export default function Chat() {
                                             />
                                         </div>
 
-                                        <div>
+                                        <div id="name">
                                             {message.first_name}{" "}
                                             {message.last_name}
                                         </div>
@@ -63,10 +63,12 @@ export default function Chat() {
                                 </div>
                             </div>
                         ))}
-                </div>
+                </ul>
             </div>
             <textarea
-                placeholder="Add your chat"
+                rows="3"
+                cols="65"
+                placeholder="Type your message to all"
                 onKeyDown={keyCheck}
             ></textarea>
         </div>

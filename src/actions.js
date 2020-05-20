@@ -25,6 +25,16 @@ export async function acceptFriendRequest(id) {
         //something
     };
 }
+export async function unfriend(id) {
+    const { data } = await axios.post(`/friendship/${id}`, {
+        text: "End Friendship",
+    });
+    console.log(data);
+    return {
+        type: "UNFRIEND",
+        id,
+    };
+}
 
 export function chatMessages(msgs) {
     return {
@@ -40,13 +50,9 @@ export function chatMessage(userAndChatInfo) {
     };
 }
 
-export async function unfriend(id) {
-    const { data } = await axios.post(`/friendship/${id}`, {
-        text: "End Friendship",
-    });
-    console.log(data);
+export function peopleOnline(people) {
     return {
-        type: "UNFRIEND",
-        id,
+        type: "THEY_ONLINE",
+        people,
     };
 }

@@ -381,10 +381,32 @@ app.post("/pendingfriends", async (req, res) => {
         console.log("error in pendingfriends", err);
     }
 });
+app.post("/deleteacoount:id", (req, res) => {
+    console.log("/deleteacoount route hit", req.params.id);
+    var user_id = req.params.id;
+    db.deleteChat(user_id)
+        .then((result) => {
+            console.log("result in deletechat", result);
+        })
+        .then(() => {
+            db.deleteFriends(user_id).then((result) => {
+                console.log("result im deletefriends", result);
+            });
+        })
+        .then(() => {
+            db.deleteuser(user_id).then((result) => {
+                console.log("result im deleteresetcode", result);
+                req.session = null;
+                res.json(result.rows);
+            });
+        });
+});
 
 server.listen(8080, function () {
     console.log("I'm listening.");
 });
+
+let onlineUsers = {};
 
 io.on("connection", function (socket) {
     console.log(`socket with the id ${socket.id} is now connected`);
@@ -392,7 +414,31 @@ io.on("connection", function (socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
+
     const userId = socket.request.session.userId;
+
+    onlineUsers[socket.id] = userId;
+    console.log("onlineUsers", onlineUsers);
+
+    var browsingUserIds = Object.values(onlineUsers);
+    console.log("browsingUserIds", browsingUserIds);
+    socket.on("disconnect", function () {
+        delete onlineUsers[socket.id];
+
+        browsingUserIds = Object.values(onlineUsers);
+        db.getUsersByIds(browsingUserIds).then((data) => {
+            console.log("DATA.rows in getUsersById", data.rows);
+
+            io.sockets.emit("peopleOnline", data.rows);
+        });
+    });
+
+    console.log("browsingUserIds", browsingUserIds);
+    db.getUsersByIds(browsingUserIds).then((data) => {
+        console.log("DATA.rows in getUsersById", data.rows);
+
+        io.sockets.emit("peopleOnline", data.rows);
+    });
 
     db.getLastMessages().then(({ rows }) => {
         console.log("Rows: ", rows);

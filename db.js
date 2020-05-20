@@ -146,3 +146,46 @@ module.exports.getLastMessages = () => {
         ON users.id = user_id ORDER BY chat.id DESC LIMIT 10;`
     );
 };
+
+module.exports.getJustAddedMsgInfo = (user_id) => {
+    return db.query(
+        `SELECT chat.id AS chats_id, first_name, last_name, pic_url, msg, user_id, chat.created_at 
+        FROM users
+        JOIN chat 
+        ON users.id = user_id WHERE chat.user_id = $1;`,
+        [user_id]
+    );
+};
+
+module.exports.getUsersByIds = (arrayOfIds) => {
+    return db.query(
+        `SELECT id, first_name, last_name, pic_url
+        FROM users
+        WHERE id = ANY ($1) ;`,
+        [arrayOfIds]
+    );
+};
+
+module.exports.deleteChat = (user_id) => {
+    return db.query(
+        `
+    DELETE FROM chat WHERE user_id = $1 RETURNING user_id`,
+        [user_id]
+    );
+};
+
+module.exports.deleteFriends = (user_id) => {
+    return db.query(
+        `
+    DELETE FROM friendships WHERE receiver_id = $1 OR sender_id = $1 RETURNING *`,
+        [user_id]
+    );
+};
+
+module.exports.deleteuser = (user_id) => {
+    return db.query(
+        `
+    DELETE FROM users WHERE id = $1 RETURNING id`,
+        [user_id]
+    );
+};

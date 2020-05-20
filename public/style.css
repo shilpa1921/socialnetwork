@@ -1,8 +1,12 @@
-* {
+/* * {
     background-color: linen;
     box-sizing: border-box;
-}
+} */
 
+body {
+    background-image: url(./background.png);
+    background-size: cover;
+}
 main {
     min-height: 100vh;
     padding: 20px;
@@ -13,8 +17,8 @@ main {
 
 .reg {
     text-align: center;
-    background-color: lightcoral;
-    border: darkkhaki solid 2px;
+    /* background-color: lightcoral; */
+    /* border: darkkhaki solid 2px; */
     max-width: 50%;
     margin-left: 25%;
     padding: 25px;
@@ -42,33 +46,30 @@ main {
 }
 .login {
     text-align: center;
-    background-color: lightcoral;
-    border: darkkhaki solid 2px;
+    /* background-color: lightcoral;
+    border: darkkhaki solid 2px; */
     max-width: 50%;
     margin-left: 25%;
     padding: 25px;
 }
-#heading {
-    background-color: lightcoral;
-}
-
+/* 
 #reset {
     background-color: lightcoral;
-}
+} */
 
 #head {
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
     margin-bottom: auto;
 }
 
 #register {
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
     margin-top: 25px;
 }
 
 #link {
     color: blue;
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
 }
 
 #bio-and-pic {
@@ -153,10 +154,12 @@ button {
 .chat-messeges-container {
     height: 300px;
     text-align: center;
-    border: solid red 2px;
-    padding: 20px;
+    border: solid sienna 3px;
+    border-radius: 15px;
+    padding: 10px;
     width: 80%;
     overflow-y: scroll;
+    margin-bottom: 40px;
 }
 
 #prof-pic-container {
@@ -243,7 +246,7 @@ button {
 }
 
 #search {
-    border: lightseagreen 3px solid;
+    border: blue 3px solid;
     margin: 0;
 }
 
@@ -264,7 +267,7 @@ ul {
 
 #nav {
     display: grid;
-    grid-template-columns: 1fr 100px 85px 100px 100px;
+    grid-template-columns: 1fr 100px 100px 100px 100px 100px 100px;
     grid-gap: 10px;
     font-size: 20px;
     position: relative;
@@ -283,7 +286,6 @@ ul {
     background-color: burlywood;
     text-decoration: none;
 }
-
 #message-unit {
     display: grid;
     grid-template-columns: 100px 1fr;
@@ -301,6 +303,18 @@ ul {
 }
 
 #msg {
-    text-align: start;
+    display: flex;
+    /* justify-content: center; */
     align-items: center;
+    padding-left: 20px;
+    font-style: oblique;
+    font-weight: 900;
+}
+
+#name {
+    text-decoration: none;
+}
+
+#bio-in-otherpeople {
+    color: brown;
 }

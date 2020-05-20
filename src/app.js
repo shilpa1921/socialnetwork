@@ -8,11 +8,13 @@ import OtherProfile from "./other-profile";
 import Logout from "./logout";
 import { HashRouter, Link } from "react-router-dom";
 import Friends from "./friends";
-import Chat from "./chat"
+import Chat from "./chat";
 
 import FindPeople from "./find-people";
 
 import { BrowserRouter, Route } from "react-router-dom";
+
+import OnlineUsers from "./online";
 
 export default class App extends React.Component {
     constructor() {
@@ -31,6 +33,7 @@ export default class App extends React.Component {
                 last: res.data.last_name,
                 imageUrl: res.data.pic_url,
                 bio: res.data.bio,
+                id: res.data.id,
             });
         });
     }
@@ -79,6 +82,7 @@ export default class App extends React.Component {
                                 imageUrl={this.state.imageUrl}
                                 toggleModal={() => this.toggleModal()}
                                 bio={this.state.bio}
+                                id={this.state.id}
                                 receiveBio={(arg) => this.receiveBio(arg)}
                             />
                         )}
@@ -100,6 +104,12 @@ export default class App extends React.Component {
                     )}
                     <Route path="/friends" render={() => <Friends />} />
                     <Route path="/chat" render={() => <Chat />} />
+                    {/* <Route path="/online" render={() => <OnlineUsers />} /> */}
+                    <Route
+                        exact
+                        path="/online"
+                        render={() => <OnlineUsers id={this.state.id} />}
+                    />
                 </BrowserRouter>
             </div>
         );

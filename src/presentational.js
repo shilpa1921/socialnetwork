@@ -9,8 +9,39 @@ export default function Presentational({ first, last, imageUrl, toggleModal }) {
 
     return (
         <div id="presentational">
-            <div>
-                    <Logo />
+            <div id="nav">
+                <div>
+                    <Link to="/">
+                        <Logo />
+                    </Link>
+                </div>
+                <Logout />
+
+                <div>
+                    <Link id="navbox" to="/users">
+                        Users
+                    </Link>
+                </div>
+                <div>
+                    <Link id="navbox" to="/">
+                        Profile
+                    </Link>
+                </div>
+                <div>
+                    <Link id="navbox" to="/friends">
+                        Friends
+                    </Link>
+                </div>
+                <div>
+                    <Link id="navbox" to="/chat">
+                        Chat
+                    </Link>
+                </div>
+                <div>
+                    <Link id="navbox" to="/online">
+                        Online
+                    </Link>
+                </div>
             </div>
 
             <div>

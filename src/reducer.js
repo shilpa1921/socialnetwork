@@ -42,8 +42,15 @@ export default function reducer(state = {}, action) {
             ...state,
             chatMessages: [...state.chatMessages, action.userAndChatInfo],
         };
-        // console.log(state);
     }
+    if (action.type == "THEY_ONLINE") {
+        state = {
+            ...state,
+            peopleOnline: action.people,
+        };
+        console.log("state in reducer", state);
+    }
+
     return state;
 }
 
