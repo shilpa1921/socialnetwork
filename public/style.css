@@ -1,10 +1,5 @@
-/* * {
-    background-color: linen;
-    box-sizing: border-box;
-} */
-
 body {
-    background-image: url(./background.png);
+    background-image: url(./back1.png);
     background-size: cover;
 }
 main {
@@ -79,6 +74,7 @@ main {
 #bioeditor {
     padding: 30px;
 }
+
 input {
     margin: 10px;
 }
@@ -138,19 +134,18 @@ button {
 }
 
 #addbio {
-    border: lightseagreen 3px solid;
-
-    width: 70px;
+    border: rgb(224, 70, 91) 3px solid;
+    width: 40%;
     text-align: center;
-    background-color: maroon;
-    color: mediumaquamarine;
-    left: 30%;
-    position: relative;
+    background-color: rgb(97, 151, 223);
 }
 #save {
     position: relative;
 }
 
+#nav div {
+    width: 100%;
+}
 .chat-messeges-container {
     height: 300px;
     text-align: center;
@@ -160,6 +155,7 @@ button {
     width: 80%;
     overflow-y: scroll;
     margin-bottom: 40px;
+    background-color: rgb(206, 238, 180);
 }
 
 #prof-pic-container {
@@ -179,25 +175,11 @@ button {
     text-align: center;
 }
 
-.profile-pic {
-    /* border-bottom: 2px rgb(85, 85, 85) solid; */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    position: relative;
-
-    background-color: whitesmoke;
-    /* padding: 10px; */
-    max-height: 150px;
-    max-width: 200px;
-    object-fit: contain;
-}
-
 #prof-pic-div p {
     /* border: 1px red solid; */
     margin: 0;
 }
 
-/* ------------------ Upload Profile Pic Modal ------------------ */
 #upload-container {
     border: 1px blue solid;
     background-color: rgba(0, 0, 0, 0.5);
@@ -243,6 +225,7 @@ button {
 
 #findPeople {
     display: inline-block;
+    margin-right: 15px;
 }
 
 #search {
@@ -283,12 +266,16 @@ ul {
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: burlywood;
+    /* background-color: burlywood; */
     text-decoration: none;
+}
+
+#navbox:hover {
+    color: red;
 }
 #message-unit {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 140px 1fr;
     margin-bottom: 30px;
 }
 
@@ -317,4 +304,13 @@ ul {
 
 #bio-in-otherpeople {
     color: brown;
+}
+
+#yes {
+    background-color: darkblue;
+    margin-top: 40px;
+}
+
+.yesbtn {
+    background-color: darkblue;
 }

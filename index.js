@@ -390,7 +390,35 @@ app.post("/deleteacoount:id", (req, res) => {
     var user_id = req.params.id;
     db.getAllPics(user_id)
         .then((result) => {
-            console.log("pics in profilepic", result);
+            let picsInAws = result.rows;
+
+            let picArr = [];
+
+            let objects = picsInAws.map((item) => {
+                let object = {
+                    Key: item.pic_url,
+                };
+                picArr.push(object);
+            });
+
+            picArr = picArr.map((item) => {
+                return {
+                    Key: item.Key.replace(
+                        "https://s3.amazonaws.com/spicedling/",
+                        ""
+                    ),
+                };
+            });
+
+            s3.delete(picArr, function (err, data) {
+                if (err) {
+                    console.log(
+                        "index.js error in s3 delete: ",
+                        err,
+                        err.stack
+                    );
+                }
+            });
         })
         .then(() => {
             db.deletepicInprofilepic(user_id).then((result) => {

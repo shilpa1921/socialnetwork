@@ -46,3 +46,31 @@ exports.upload = (req, res, next) => {
             res.sendStatus(500);
         });
 };
+
+exports.delete = (picArr, next) => {
+    if (!picArr) {
+        console.log("no pics");
+        return res.sendStatus(500);
+    }
+
+    const promise = s3
+        .deleteObjects({
+            Bucket: "spicedling",
+            Delete: {
+                Objects: picArr,
+                Quiet: false,
+            },
+        })
+        .promise();
+
+    promise
+        .then((data) => {
+            console.log("data in s3.js", data);
+            console.log("s3.js deleteObject fired");
+            next();
+        })
+        .catch((err) => {
+            console.log("s3.js: error in delete object", err);
+            res.sendStatus(500);
+        });
+};

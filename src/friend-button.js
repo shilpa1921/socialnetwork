@@ -26,7 +26,7 @@ export default function FriendshipButton({ otherUserId }) {
     }
     return (
         <div>
-            <button onClick={submit} className="btn">
+            <button id="yes" onClick={submit} className="btn">
                 {buttonText}
             </button>
         </div>

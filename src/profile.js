@@ -14,13 +14,16 @@ export default function Profie({
     imageUrl = imageUrl || "default.png";
     console.log("props in profile", bio, first, receiveBio);
     const deleteAccount = () => {
-        console.log("shilpa delted", id);
-        axios.post(`/deleteacoount` + id).then((res) => {
-            console.log("response from delete account", res.data[0].id);
-            if (res.data[0].id == id) {
-                location.replace("/");
-            }
-        });
+        // console.log(" id in deleteAccount function", id);
+        const isConfirm = confirm("Please Confirm Deletion Account");
+        if (isConfirm) {
+            axios.post(`/deleteacoount` + id).then((res) => {
+                console.log("response from delete account", res.data[0].id);
+                if (res.data[0].id == id) {
+                    location.replace("/");
+                }
+            });
+        }
     };
     return (
         <div>
@@ -33,9 +36,11 @@ export default function Profie({
                 </div>
                 <div id="bioeditor">
                     <BioEditor bio={bio} receiveBio={receiveBio} />
+                    <button id="yes" onClick={deleteAccount}>
+                        Delete your Account
+                    </button>
                 </div>
             </div>
-            <button onClick={deleteAccount}>Delete Account</button>
         </div>
     );
 }
